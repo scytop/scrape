@@ -6,11 +6,12 @@ import sys
 import os
 import time
 import signal
+import re
 
-DRY_RUN = True
+DRY_RUN = False
 
 def signal_handler(signal, frame):
-        sys.exit(0)
+    sys.exit(0)
 signal.signal(signal.SIGINT, signal_handler)
 
 def pathify(term, subject):
@@ -29,6 +30,7 @@ def get_subjects(filename='subject_tags.dat'):
     subjects = []
     with open(filename) as f:
         for line in f:
+            line = re.sub(r'%26', r'&', line)
             subjects.append(line.strip())
     return subjects
 
@@ -64,13 +66,12 @@ if __name__ == '__main__':
     hits = 0
     prog = 0
 
-    max_hits = 5
-    SLEEP_TIME = 3
+    max_hits = 10
+    SLEEP_TIME = 6
 
     import argparse
     parser = argparse.ArgumentParser(description='Scrape UCLA for schedule of classes data. Save html files to html directory')
-    parser.add_argument('', type=str, help='')
-    parser.add_argument('-s', type=float, metavar='max-distance', help='Set sleep time between requests')
+    parser.add_argument('-s', type=float, metavar='sleep-time', help='Set sleep time between requests')
     parser.add_argument('-n', type=int, metavar='max-requests', help='Set maximum number http requests sent')
     parser.add_argument('-q', type=str, metavar='quarters', help='Set which quarters to scrape')
     parser.add_argument('-y', type=str, metavar='year', help='Set which year to scrape')
@@ -93,6 +94,8 @@ if __name__ == '__main__':
         if 'S' in q:
             quarters += 'S'
     if y:
+        if len(y) == 4:
+            y = y[2:] # not 2014, just 14
         years = [y]
 
     for subject in subjects:
@@ -133,5 +136,5 @@ if __name__ == '__main__':
                     print "\nhit %d times, %d left" % (hits, len(years)*len(quarters)*len(subjects) - prog)
                     sys.exit()
                 time.sleep(SLEEP_TIME)
-    print "\n[FINISHED] hit %d times" % (hits)
+    print "\n[FINISHED] hit %d times. Got %s for %s" % (hits, ', '.join(quarters), ', '.join(years))
 

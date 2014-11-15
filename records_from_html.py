@@ -165,7 +165,6 @@ if __name__ == '__main__':
             c = Class(**d)
             classes.append(c)
 
-    print
     print Class.fields()
     print '\n'.join([str(cls) for cls in classes])
     sys.stderr.write('\n' + Class.get_longest())
