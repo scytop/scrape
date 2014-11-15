@@ -1,0 +1,4 @@
+./get_subject_urls                                     # probably unneeded, unless they add some entire subject area
+./scrape.py -n 190 -s 6 -q F -y 2014                   # get all courses from fall 2014, saves to html folder
+./records_from_html.py html/14F_*.html > records.txt   # convert all those html files into tab separated records for use in SQL
+rm -rf html/*                                          # once you have the records, you don't need the html
