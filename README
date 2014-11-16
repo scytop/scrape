@@ -7,5 +7,8 @@
 # convert all those html files into tab separated records for use in SQL
 ./records_from_html.py html/14F_*.html > records.txt
 
+# get rid of the duplicates
+sort -u records.txt > records.txt
+
 # once you have the records, you don't need the html
-rm -rf html/*
+rm html/*

@@ -76,12 +76,12 @@ class Class:
                 setattr(self, arg, val)
 
     def __repr__(self):
-        return '{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}'.format(
-                self.year, toQuarter(self.quarter), self.major, self.tag, self.section, self.fullname, self.instructor)
+        return '{0}\t{1}\t{2}\t{3}\t{4}\t{5}'.format(
+                self.year, toQuarter(self.quarter), self.major, self.tag, self.fullname, self.instructor)
 
     @classmethod
     def fields(cls):
-        return 'year\tquarter\tsubject\ttag\tsection\tname\tinstructor'
+        return 'year\tquarter\tsubject\ttag\tname\tinstructor'
 
     @classmethod
     def get_longest(cls):
@@ -104,7 +104,7 @@ if __name__ == '__main__':
     major_regex = r'<td class="SAHeaderGreenBar">.*?<span[^>]*class="coursehead">(.*?)</span>.*?</td>'
     term_regex = r'<td>.*?<span id="ctl00_BodyContentPlaceHolder_detmain_lblTermHeader" class="heading2">(.*?)</span>.*?</td>'
     table_regex = r'<table[^>]*>(.*?)</table>'
-    course_regex = r'^([A-Za-z ]* [A-Za-z0-9]+) (.*?)$'
+    course_regex = r'^([A-Za-z &]* [A-Za-z0-9]+) (.*?)$'
 
     cls_re = re.compile(classname_regex, re.DOTALL)
     inst_re = re.compile(instructor_regex, re.DOTALL)
