@@ -158,6 +158,8 @@ if __name__ == '__main__':
             lec_s = (inst[0])[0]
             inst_s = inst_s.strip()
             lec_s = lec_s.strip()
+            if re.search(r'[2-9][0-9][0-9]', current_course):
+                continue # ignore grad classes
             d = {'year':current_year, 'quarter':current_quarter,
                     'tag':current_course, 'fullname':current_name,
                     'instructor':inst_s, 'section':lec_s,
